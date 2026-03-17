@@ -44,22 +44,12 @@
         body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #0F172A; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Layout Constraints */
         .content-container { max-width: 1100px; margin-left: auto; margin-right: auto; padding-left: 2.5rem; padding-right: 2.5rem; }
-        
         .soft-shadow { box-shadow: 0 40px 80px rgba(0, 0, 0, 0.04); }
         .glass-nav { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
         
-        .premium-border { border: 1px solid rgba(0,0,0,0.06); }
-        
-        .hover-card {
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hover-card:hover {
-            border-color: #007AFF;
-            transform: translateY(-12px);
-            box-shadow: 0 30px 60px rgba(0, 122, 255, 0.08);
-        }
+        .hover-card { transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .hover-card:hover { border-color: #007AFF; transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0, 122, 255, 0.08); }
 
         .gradient-tech {
             background: linear-gradient(to right, #007AFF 0%, #60A5FA 50%, #007AFF 100%);
@@ -69,69 +59,90 @@
             animation: text-shimmer 4s linear infinite;
         }
 
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1.2em;
-            background: #007AFF;
-            margin-left: 4px;
-            vertical-align: middle;
-            animation: blink 0.8s infinite;
-        }
+        .cursor { display: inline-block; width: 8px; height: 1.2em; background: #007AFF; margin-left: 4px; vertical-align: middle; animation: blink 0.8s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Perpetual Reveal Animation */
-        .reveal { 
-            opacity: 0; 
-            transform: translateY(40px); 
-            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         .btn-pulse { position: relative; }
         .btn-pulse::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 14px;
-            border: 2px solid #007AFF;
-            animation: pulse-ring 3s infinite;
-            pointer-events: none;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 14px; border: 2px solid #007AFF; animation: pulse-ring 3s infinite; pointer-events: none;
         }
-        @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.5); opacity: 0; }
+        @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.5); opacity: 0; } }
+
+        .tech-grid { background-image: radial-gradient(rgba(0, 122, 255, 0.04) 1px, transparent 0); background-size: 30px 30px; }
+
+        /* UNIVERSAL NATIVE INTEGRATION ENGINE */
+        #uni-ecosystem-section {
+            position: relative; width: 100%; height: 85vh; min-height: 750px;
+            overflow: hidden; background: #ffffff;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        .tech-grid {
-            background-image: radial-gradient(rgba(0, 122, 255, 0.04) 1px, transparent 0);
-            background-size: 30px 30px;
+        #uni-main-canvas { position: absolute; z-index: 5; pointer-events: none; top: 0; left: 0; }
+
+        .uni-hub-center {
+            position: relative; z-index: 20;
+            width: clamp(130px, 20vw, 160px);
+            height: clamp(130px, 20vw, 160px);
+            background: #0F172A;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: nucleus-breathe 6s ease-in-out infinite;
+        }
+
+        .uni-hub-center span {
+            color: white; font-weight: 800; font-size: 15px; font-family: 'Inter', sans-serif;
+            letter-spacing: 4px; user-select: none; text-align: center;
+        }
+
+        @keyframes nucleus-breathe {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0px rgba(0, 122, 255, 0); }
+            50% { transform: scale(1.05); box-shadow: 0 0 60px rgba(0, 122, 255, 0.3); }
+        }
+
+        .uni-node-circle {
+            position: absolute; z-index: 30;
+            width: 115px; height: 115px;
+            background: #F8FAFC;
+            border: 1px solid rgba(0, 122, 255, 0.12);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            text-align: center; font-size: 12px; font-weight: 800;
+            color: #475569; font-family: 'Inter', sans-serif;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            transition: background 0.8s ease, color 0.6s ease, border-color 0.8s ease, box-shadow 1s ease;
+            user-select: none; line-height: 1.3; text-transform: uppercase;
+        }
+
+        .uni-node-circle.is-active {
+            color: white;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+            border-color: transparent;
         }
     </style>
 </head>
 <body class="antialiased overflow-x-hidden">
 
-    <!-- 1. Navigation Bar -->
+    <!-- 1. Navigation Bar (Right-Aligned Links) -->
     <nav class="fixed top-0 w-full z-[100] glass-nav border-b border-black/5">
         <div class="max-w-6xl mx-auto px-10 h-24 flex items-center justify-between">
-            <!-- Logo -->
-            <span class="text-xl md:text-2xl font-extrabold tracking-tighter text-deep uppercase">
+            <span class="text-xl md:text-2xl font-extrabold tracking-tighter text-deep uppercase cursor-pointer">
                 Bubbleye <span class="text-primary">Poseidon</span>
             </span>
 
-            <!-- Center Navigation Links (Muted Gray Style) -->
-            <div class="hidden md:flex items-center space-x-12">
-                <a href="#ecosystem" class="text-slate font-semibold text-sm tracking-wide hover:text-primary transition-colors duration-300">Ecosystem</a>
-                <a href="#command" class="text-slate font-semibold text-sm tracking-wide hover:text-primary transition-colors duration-300">Command Modes</a>
+            <div class="flex items-center space-x-12">
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#ecosystem" class="text-slate font-bold text-sm tracking-wide hover:text-primary transition-colors duration-300">Ecosystem</a>
+                    <a href="#command" class="text-slate font-bold text-sm tracking-wide hover:text-primary transition-colors duration-300">Command Modes</a>
+                </div>
+                <button class="btn-pulse bg-primary text-white px-10 py-3.5 rounded-2xl font-bold text-sm hover:scale-105 transition-all shadow-xl shadow-primary/20">
+                    Contact Us
+                </button>
             </div>
-
-            <!-- Action Button -->
-            <button class="btn-pulse bg-primary text-white px-10 py-3.5 rounded-2xl font-bold text-sm hover:scale-105 transition-all shadow-xl shadow-primary/20">
-                Contact Us
-            </button>
         </div>
     </nav>
 
@@ -142,68 +153,57 @@
                 <i data-lucide="sparkles" class="w-4 h-4"></i>
                 <span>THE FUTURE OF AUTONOMOUS AD OPS</span>
             </div>
-            
             <h1 class="reveal text-5xl md:text-8xl font-extrabold tracking-tighter text-deep leading-[1.05] mb-12">
                 The World's First AI Agent for <br class="hidden md:block"/> 
                 <span class="gradient-tech">Creative Automation.</span>
             </h1>
-            
-            <p class="reveal text-lg md:text-2xl text-slate/70 leading-relaxed max-w-3xl mx-auto mb-20 font-medium">
+            <p class="reveal text-lg md:text-2xl text-slate/70 leading-relaxed max-w-3xl mx-auto mb-20 font-medium text-center">
                 The central AI Orchestration Hub that commands specialized native modules while preserving full network potential.
             </p>
         </div>
     </header>
 
-    <!-- 3. Universal Native Integration (Ecosystem Section) -->
-    <section id="ecosystem" class="py-32 bg-ghost border-y border-black/5 px-8">
-        <div class="content-container text-center">
-            <p class="reveal text-xs font-bold uppercase tracking-[0.6em] text-deep mb-20 opacity-40">Universal Native Integration</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 justify-center" id="module-grid">
-                <!-- JS Injected Fixed 2x4 Grid -->
-            </div>
+    <!-- 3. Universal Native Integration -->
+    <section id="ecosystem" class="border-y border-black/5 bg-white py-24">
+        <div class="content-container text-center mb-16">
+            <h2 class="reveal text-4xl md:text-6xl font-extrabold text-deep tracking-tighter mb-8 leading-tight">Universal Native Integration</h2>
+            <p class="reveal text-slate/60 text-lg max-w-2xl mx-auto">Seamlessly connected to the world's most powerful ad networks through high-fidelity native APIs.</p>
+        </div>
+        <div id="uni-ecosystem-section">
+            <div class="uni-hub-center"><span>POSEIDON</span></div>
+            <canvas id="uni-main-canvas"></canvas>
         </div>
     </section>
 
-    <!-- 4. Orchestration Intelligence (Centered Features) -->
+    <!-- 4. Orchestration Intelligence (Title Case) -->
     <section class="py-48 bg-white px-8">
         <div class="content-container text-center">
-            <div class="reveal mb-28">
-                <h2 class="text-4xl md:text-6xl font-extrabold text-deep tracking-tight mb-8 leading-tight">Orchestration Intelligence</h2>
+            <div class="reveal mb-28 text-center">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-deep tracking-tighter mb-8 leading-tight">Orchestration Intelligence</h2>
                 <p class="text-slate/60 text-lg max-w-2xl mx-auto">Bridging the gap between human intent and high-velocity network execution.</p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mb-32">
                 <div class="reveal p-12 rounded-[3.5rem] bg-ghost premium-border hover-card flex flex-col items-center">
-                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10">
-                        <i data-lucide="layers" class="w-8 h-8"></i>
-                    </div>
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10"><i data-lucide="layers" class="w-8 h-8"></i></div>
                     <h4 class="font-bold text-2xl text-deep mb-6">Native API Preservation</h4>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Official protocols for 100% feature compatibility across all supported channels.</p>
                 </div>
                 <div class="reveal p-12 rounded-[3.5rem] bg-ghost premium-border hover-card flex flex-col items-center" style="transition-delay: 100ms;">
-                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10">
-                        <i data-lucide="refresh-ccw" class="w-8 h-8"></i>
-                    </div>
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10"><i data-lucide="refresh-ccw" class="w-8 h-8"></i></div>
                     <h4 class="font-bold text-2xl text-deep mb-6">Cross-Platform Sync</h4>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Real-time asset mirroring across your tech stack with autonomous synchronization.</p>
                 </div>
                 <div class="reveal p-12 rounded-[3.5rem] bg-ghost premium-border hover-card flex flex-col items-center" style="transition-delay: 200ms;">
-                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10">
-                        <i data-lucide="brain-circuit" class="w-8 h-8"></i>
-                    </div>
+                    <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10"><i data-lucide="brain-circuit" class="w-8 h-8"></i></div>
                     <h4 class="font-bold text-2xl text-deep mb-6">Intent-Driven Strategy</h4>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Natural language command mapping for sophisticated multi-geo delivery.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- 5. Tech Terminal (Perpetual Animation) -->
-    <section class="pb-48 bg-white px-8">
-        <div class="content-container">
+            <!-- White Tech Terminal -->
             <div class="reveal animate-float max-w-4xl mx-auto">
                 <div class="absolute -inset-10 bg-primary/5 blur-[100px] rounded-[4rem] opacity-40"></div>
-                <div class="relative bg-white rounded-3xl overflow-hidden soft-shadow border border-primary/10">
+                <div class="relative bg-white rounded-3xl overflow-hidden soft-shadow border border-primary/10 text-left">
                     <div class="bg-ghost/50 px-8 py-5 flex items-center justify-between border-b border-black/5">
                         <div class="flex space-x-2">
                             <div class="w-2.5 h-2.5 rounded-full bg-slate/10"></div>
@@ -212,41 +212,32 @@
                         </div>
                         <div class="mono text-[10px] text-primary font-bold tracking-[0.25em] uppercase">poseidon-agent-core-v1</div>
                     </div>
-                    <div class="p-10 md:p-14 h-[440px] tech-grid mono text-xs md:text-sm flex flex-col justify-start overflow-y-auto" id="terminal-engine">
-                        <!-- Terminal content injected here -->
-                    </div>
+                    <div class="p-10 md:p-14 h-[440px] tech-grid mono text-xs md:text-sm flex flex-col justify-start overflow-y-auto" id="terminal-engine"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. Command Modes (Command and Control Section) -->
+    <!-- 5. Command Modes (Title Case) -->
     <section id="command" class="py-48 bg-ghost px-8 border-t border-black/5">
         <div class="content-container text-center">
-            <div class="reveal mb-24">
+            <div class="reveal mb-24 text-center">
                 <h2 class="text-4xl md:text-6xl font-extrabold text-deep tracking-tighter mb-8 leading-tight">Command and Control</h2>
                 <p class="text-slate/60 text-lg max-w-2xl mx-auto">Designed for engineers, managers, and creative visionaries.</p>
             </div>
-
             <div class="grid md:grid-cols-3 gap-12">
-                <div class="reveal bg-white p-14 rounded-[3.5rem] premium-border hover-card group flex flex-col items-center">
-                    <div class="w-20 h-20 bg-primary text-white rounded-[2rem] flex items-center justify-center mb-10 shadow-2xl shadow-primary/20">
-                        <i data-lucide="bot" class="w-10 h-10"></i>
-                    </div>
+                <div class="reveal bg-white p-14 rounded-[3.5rem] premium-border hover-card flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-primary text-white rounded-[2rem] flex items-center justify-center mb-10 shadow-2xl shadow-primary/20"><i data-lucide="bot" class="w-10 h-10"></i></div>
                     <h3 class="text-2xl font-black mb-6">Agent-Led</h3>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Command Poseidon to sync and optimize via Natural Language interfaces.</p>
                 </div>
-                <div class="reveal bg-white p-14 rounded-[3.5rem] premium-border hover-card group flex flex-col items-center" style="transition-delay: 100ms;">
-                    <div class="w-20 h-20 bg-deep text-white rounded-[2rem] flex items-center justify-center mb-10">
-                        <i data-lucide="code-2" class="w-10 h-10"></i>
-                    </div>
+                <div class="reveal bg-white p-14 rounded-[3.5rem] premium-border hover-card flex flex-col items-center text-center" style="transition-delay: 100ms;">
+                    <div class="w-20 h-20 bg-deep text-white rounded-[2rem] flex items-center justify-center mb-10"><i data-lucide="code-2" class="w-10 h-10"></i></div>
                     <h3 class="text-2xl font-black mb-6">Developer-First</h3>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Build custom orchestration logic directly on our robust API endpoints.</p>
                 </div>
-                <div class="reveal bg-white p-14 rounded-[3.5rem] premium-border hover-card group flex flex-col items-center" style="transition-delay: 200ms;">
-                    <div class="w-20 h-20 bg-primary/10 text-primary rounded-[2rem] flex items-center justify-center mb-10">
-                        <i data-lucide="layout-dashboard" class="w-10 h-10"></i>
-                    </div>
+                <div class="reveal bg-white p-14 rounded-[3.5rem] premium-border hover-card flex flex-col items-center text-center" style="transition-delay: 200ms;">
+                    <div class="w-20 h-20 bg-primary/10 text-primary rounded-[2rem] flex items-center justify-center mb-10"><i data-lucide="layout-dashboard" class="w-10 h-10"></i></div>
                     <h3 class="text-2xl font-black mb-6">Manager-Friendly</h3>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">A unified panoramic view of your global creative asset lifecycle.</p>
                 </div>
@@ -254,11 +245,10 @@
         </div>
     </section>
 
-    <!-- 7. Final CTA -->
+    <!-- 6. Final CTA -->
     <section class="py-48 bg-white px-8">
         <div class="reveal max-w-5xl mx-auto bg-deep rounded-[4rem] p-24 md:p-40 text-center relative overflow-hidden">
             <div class="absolute inset-0 opacity-5 pointer-events-none tech-grid"></div>
-            
             <h2 class="text-5xl md:text-7xl font-extrabold text-white mb-14 relative z-10 tracking-tight leading-tight">Request Access to the Future.</h2>
             <div class="flex justify-center relative z-10">
                 <button class="bg-primary text-white px-16 py-6 rounded-2xl font-extrabold text-xl hover:bg-blue-600 hover:scale-110 transition-all shadow-[0_25px_60px_rgba(0,122,255,0.45)]">
@@ -268,66 +258,39 @@
         </div>
     </section>
 
-    <!-- 8. Footer -->
+    <!-- 7. Footer (Platform Refined) -->
     <footer class="bg-white border-t border-black/5 py-32 px-10">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-24">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-24 text-center md:text-left">
             <div class="col-span-2 text-center md:text-left">
                 <span class="text-2xl font-black text-deep tracking-tighter uppercase">Bubbleye Poseidon</span>
-                <p class="mt-8 text-slate/50 text-sm max-w-xs leading-relaxed font-medium mx-auto md:mx-0">
-                    The orchestration layer for the AI age. Unifying global networks into a single autonomous command center.
-                </p>
+                <p class="mt-8 text-slate/50 text-sm max-w-xs leading-relaxed font-medium mx-auto md:mx-0">The orchestration layer for the AI age. Unifying global networks into a single autonomous command center.</p>
             </div>
+            
             <div class="text-center md:text-left">
-                <h4 class="font-bold text-deep mb-10 uppercase text-xs tracking-[0.3em] opacity-40">Resources</h4>
+                <h4 class="font-bold text-deep mb-10 uppercase text-xs tracking-[0.3em] opacity-40">Platform</h4>
                 <ul class="text-slate/60 text-sm space-y-6 font-semibold">
-                    <li><a href="#" class="hover:text-primary transition-colors">Documentation</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">API Modules</a></li>
+                    <li><a href="#ecosystem" class="hover:text-primary transition-colors">Native Hubs</a></li>
+                    <li><a href="#command" class="hover:text-primary transition-colors">Command Modes</a></li>
                 </ul>
             </div>
+            
             <div class="text-center md:text-left">
                 <h4 class="font-bold text-deep mb-10 uppercase text-xs tracking-[0.3em] opacity-40">Connect</h4>
                 <ul class="text-slate/60 text-sm space-y-6 font-semibold">
-                    <li><a href="#" class="hover:text-primary transition-colors">Sales</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Contact Sales</a></li>
                     <li><a href="#" class="hover:text-primary transition-colors">LinkedIn</a></li>
                 </ul>
             </div>
         </div>
         <div class="max-w-6xl mx-auto mt-28 pt-12 border-t border-black/5 text-center">
-            <p class="text-slate/30 text-[11px] font-bold uppercase tracking-[0.5em]">
-                © 2026 Bubbleye AI. The Central Intelligence for Creative Orchestration.
-            </p>
+            <p class="text-slate/30 text-[11px] font-bold uppercase tracking-[0.5em]">© 2026 Bubbleye AI. The Central Intelligence for Creative Orchestration.</p>
         </div>
     </footer>
 
     <script>
         lucide.createIcons();
 
-        // 1. Module Generator (Fixed 2x4 Centered Rows)
-        const modules = [
-            { name: "Applovin", icon: "zap" },
-            { name: "Google Ads", icon: "search" },
-            { name: "Ironsource", icon: "cpu" },
-            { name: "Meta", icon: "facebook" },
-            { name: "TikTok", icon: "music" },
-            { name: "Mintegral", icon: "layers" },
-            { name: "Moloco", icon: "bar-chart-2" },
-            { name: "Unity", icon: "box" }
-        ];
-
-        const moduleGrid = document.getElementById('module-grid');
-        modules.forEach((mod, idx) => {
-            const div = document.createElement('div');
-            div.className = "reveal bg-white p-12 rounded-3xl flex flex-col items-center justify-center premium-border hover-card group cursor-default text-center";
-            div.style.transitionDelay = `${(idx % 4) * 80}ms`;
-            div.innerHTML = `
-                <div class="text-slate/30 group-hover:text-primary transition-colors mb-6 flex justify-center"><i data-lucide="${mod.icon}" class="w-8 h-8"></i></div>
-                <span class="text-[12px] font-black uppercase tracking-widest text-deep opacity-80">${mod.name}</span>
-            `;
-            moduleGrid.appendChild(div);
-        });
-        lucide.createIcons();
-
-        // 2. Perpetual Scroll Reveal Engine
+        // 1. Perpetual Scroll Reveal
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -336,12 +299,148 @@
                     entry.target.classList.remove('active');
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // 3. AI Terminal Engine (ISO 24H English)
+        // 2. UNIVERSAL NATIVE INTEGRATION ENGINE (Physics Preserved)
+        const brandStyles = [
+            { name: 'Applovin', color: '#0d9488' },
+            { name: 'Google Ads', color: '#4f46e5' },
+            { name: 'Ironsource', color: '#d97706' },
+            { name: 'Meta', color: '#1d4ed8' },
+            { name: 'TikTok', color: '#be123c' },
+            { name: 'Mintegral', color: '#0369a1' },
+            { name: 'Moloco', color: '#5b21b6' },
+            { name: 'Unity', color: '#334155' }
+        ];
+
+        const canvas = document.getElementById('uni-main-canvas');
+        const ctx = canvas.getContext('2d');
+        const viewLayer = document.getElementById('uni-ecosystem-section');
+        let w, h, cx, cy, orbitRadius;
+        let nodes = [];
+        let mouse = { x: -3000, y: -3000 };
+        let dpr = window.devicePixelRatio || 1;
+
+        class BrandingNode {
+            constructor(i, style) {
+                this.name = style.name;
+                this.color = style.color;
+                this.angle = (i / brandStyles.length) * (Math.PI * 2);
+                this.animAlpha = 0; 
+                this.x = 0; this.y = 0;
+                this.isTriggered = false;
+
+                this.el = document.createElement('div');
+                this.el.className = 'uni-node-circle';
+                this.el.innerHTML = this.name.replace(' ', '<br>');
+                viewLayer.appendChild(this.el);
+
+                this.el.addEventListener('mouseenter', () => this.isTriggered = true);
+                this.el.addEventListener('mouseleave', () => this.isTriggered = false);
+            }
+
+            update(t) {
+                const breathing = Math.sin(t * 0.001 + this.angle) * 12;
+                const targetDistance = orbitRadius + breathing;
+                const homeX = cx + Math.cos(this.angle) * targetDistance;
+                const homeY = cy + Math.sin(this.angle) * targetDistance;
+
+                if (this.isTriggered) {
+                    this.animAlpha += (1 - this.animAlpha) * 0.04;
+                    this.el.classList.add('is-active');
+                    this.el.style.backgroundColor = this.color;
+                } else {
+                    this.animAlpha += (0 - this.animAlpha) * 0.03;
+                    this.el.classList.remove('is-active');
+                    this.el.style.backgroundColor = '#F8FAFC';
+                }
+
+                const dx = homeX - mouse.x;
+                const dy = homeY - mouse.y;
+                const d = Math.sqrt(dx*dx + dy*dy);
+                let ox = 0, oy = 0;
+                if (d < 350) {
+                    const softForce = (350 - d) * 0.06;
+                    ox = (dx/d) * -softForce;
+                    oy = (dy/d) * -softForce;
+                }
+
+                this.x += (homeX + ox - this.x) * 0.07;
+                this.y += (homeY + oy - this.y) * 0.07;
+                const scale = 1 + (this.animAlpha * 0.08);
+                this.el.style.transform = `translate(${this.x - cx}px, ${this.y - cy}px) scale(${scale})`;
+            }
+
+            drawLines() {
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(this.x, this.y);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = 0.2 * (1 - this.animAlpha);
+                ctx.stroke();
+
+                if (this.animAlpha > 0.005) {
+                    ctx.beginPath();
+                    ctx.moveTo(cx, cy);
+                    ctx.lineTo(this.x, this.y);
+                    ctx.strokeStyle = this.color;
+                    ctx.lineWidth = 1.2 + this.animAlpha;
+                    ctx.globalAlpha = this.animAlpha * 0.6;
+                    ctx.stroke();
+
+                    const pulseT = (Date.now() % 2500) / 2500;
+                    const lx = this.x + (cx - this.x) * pulseT;
+                    const ly = this.y + (cy - this.y) * pulseT;
+                    ctx.beginPath();
+                    ctx.arc(lx, ly, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.animAlpha * (1 - pulseT);
+                    ctx.fill();
+                }
+            }
+        }
+
+        function initUni() {
+            w = viewLayer.offsetWidth;
+            h = viewLayer.offsetHeight;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            canvas.style.width = `${w}px`;
+            canvas.style.height = `${h}px`;
+            ctx.scale(dpr, dpr);
+            cx = w / 2; cy = h / 2;
+            const minS = Math.min(w, h);
+            orbitRadius = w < 768 ? minS * 0.4 : minS * 0.35; 
+            if (nodes.length === 0) {
+                nodes = brandStyles.map((s, i) => new BrandingNode(i, s));
+            }
+        }
+
+        function loopUni() {
+            ctx.clearRect(0, 0, w, h);
+            const t = Date.now();
+            nodes.forEach(p => {
+                p.update(t);
+                p.drawLines();
+            });
+            requestAnimationFrame(loopUni);
+        }
+
+        viewLayer.addEventListener('mousemove', e => {
+            const rect = viewLayer.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        window.addEventListener('resize', initUni);
+        initUni();
+        loopUni();
+
+        // 3. AI Terminal Engine
         const term = document.getElementById('terminal-engine');
-        const tasks = [
+        const terminalTasks = [
             {
                 prompt: "poseidon sync --top-assets --from meta --to google,unity",
                 logs: [
@@ -363,40 +462,33 @@
             }
         ];
 
-        let currentIdx = 0;
+        let currentTermIdx = 0;
         async function runTerminal() {
             term.innerHTML = '';
-            const task = tasks[currentIdx];
-
+            const task = terminalTasks[currentTermIdx];
             const p = document.createElement('div');
             p.className = "text-deep mb-8 flex items-center";
             p.innerHTML = `<span class="text-primary mr-6 font-black text-xl">➜</span><span id="typing-box" class="font-bold"></span><span class="cursor"></span>`;
             term.appendChild(p);
-
             const box = document.getElementById('typing-box');
             for(let char of task.prompt) {
                 box.textContent += char;
                 await new Promise(r => setTimeout(r, 20));
             }
-
             await new Promise(r => setTimeout(r, 600));
-
             for(let log of task.logs) {
                 const logLine = document.createElement('div');
                 const ok = log.includes("SUCCESS");
                 const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
-                
                 logLine.className = `text-[12px] mb-3.5 opacity-0 transition-opacity duration-200 ${ok ? 'text-primary font-black pt-8' : 'text-slate/50'}`;
                 logLine.innerHTML = `<span class="mr-6 opacity-30 text-[10px] tracking-widest font-bold">${time}</span> ${log}`;
                 term.appendChild(logLine);
-                
                 void logLine.offsetWidth;
                 logLine.style.opacity = '1';
                 await new Promise(r => setTimeout(r, 120));
             }
-
             await new Promise(r => setTimeout(r, 5000));
-            currentIdx = (currentIdx + 1) % tasks.length;
+            currentTermIdx = (currentTermIdx + 1) % terminalTasks.length;
             runTerminal();
         }
         runTerminal();
