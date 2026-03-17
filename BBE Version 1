@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Automation Hub | Bubbleye AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #00AEEF;
+            --bg-deep: #05070a; 
+            --card-surface: #0d1117; 
+            --text-main: #FFFFFF;
+            --text-muted: #8B949E;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --accent-gradient: linear-gradient(135deg, #00AEEF 0%, #6366f1 100%);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-deep); 
+            color: var(--text-main); 
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* --- Navbar (優化間距) --- */
+        nav { 
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 0; 
+            background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass); z-index: 1000;
+        }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary-blue); text-decoration: none; letter-spacing: -1px; }
+        
+        .nav-links { display: flex; gap: 3.5rem; align-items: center; } 
+        .nav-link { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
+        .nav-link:hover { color: var(--primary-blue); }
+        
+        .btn-demo { 
+            background: var(--primary-blue); color: white; padding: 0.7rem 1.6rem; border-radius: 10px; 
+            text-decoration: none; font-weight: 700; font-size: 0.85rem; 
+            box-shadow: 0 4px 15px rgba(0, 174, 239, 0.2); transition: var(--transition);
+            margin-left: 1rem; 
+        }
+        .btn-demo:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 174, 239, 0.4); }
+
+        /* --- Hero --- */
+        header.hero { padding: 10rem 0 4rem; text-align: center; }
+        h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.5rem; }
+        h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { font-size: 1.2rem; color: var(--text-muted); max-width: 750px; margin: 0 auto; }
+
+        /* --- Showcase Window & Logic --- */
+        .logic-grid { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; align-items: center; gap: 1rem; margin: 4rem 0; }
+        .logic-card { background: var(--card-surface); padding: 2.2rem 1.5rem; border-radius: 24px; border: 1px solid var(--border-glass); text-align: center; cursor: pointer; transition: var(--transition); }
+        .logic-card.active { border-color: var(--primary-blue); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .logic-card h3 { color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 0.8rem; font-weight: 800; }
+        .logic-card p { font-size: 0.85rem; color: var(--text-muted); }
+        .divider { color: #1e293b; font-size: 1.5rem; font-weight: bold; text-align: center; }
+
+        .showcase-window { background: #010409; border: 1px solid var(--border-glass); border-radius: 32px; min-height: 560px; position: relative; margin-bottom: 8rem; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+        .pane { position: absolute; inset: 0; padding: 3rem; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .pane.active { opacity: 1; visibility: visible; }
+
+        /* PANE 0: ChatGPT Animation */
+        .instruction-grid { display: grid; grid-template-columns: 1.2fr 80px 1.2fr; align-items: center; gap: 1rem; width: 100%; max-width: 1000px; }
+        .chatgpt-box { background: #161b22; border: 1px solid var(--border-glass); border-radius: 20px; padding: 2.5rem; min-height: 250px; position: relative; display: flex; flex-direction: column; justify-content: center; }
+        .chatgpt-box::before { content: "STRATEGY INPUT"; position: absolute; top: 15px; left: 20px; font-size: 0.6rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; }
+        .ai-status { position: absolute; bottom: 15px; right: 20px; display: flex; align-items: center; gap: 8px; font-size: 0.65rem; color: var(--primary-blue); font-weight: 800; opacity: 0; transition: opacity 0.3s; }
+        .status-dot { width: 8px; height: 8px; background: var(--primary-blue); border-radius: 50%; animation: pulse-glow 1.5s infinite; }
+        @keyframes pulse-glow { 0% { transform: scale(0.9); } 70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 174, 239, 0); } 100% { transform: scale(0.9); } }
+        .data-flow-container { position: relative; width: 100%; height: 2px; background: #1e293b; overflow: hidden; }
+        .data-beam { position: absolute; width: 40px; height: 100%; background: var(--primary-blue); left: -40px; }
+        .data-beam.active { animation: beamMove 1s infinite linear; }
+        @keyframes beamMove { from { left: -40px; } to { left: 100%; } }
+        .code-box { background: #0d1117; border: 1px solid var(--border-glass); border-radius: 20px; padding: 2.5rem; min-height: 250px; font-family: 'Fira Code', monospace; color: #7ee787; font-size: 0.85rem; position: relative; display: flex; flex-direction: column; justify-content: center; }
+        .code-box::before { content: "MACHINE EXECUTION"; position: absolute; top: 15px; left: 20px; font-size: 0.6rem; font-weight: 800; color: #8B949E; }
+
+        /* PANE 1: Platform Sync (Centered) */
+        .platform-group { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+        .platform-box { 
+            padding: 1.8rem; background: #161b22; border-radius: 20px; border: 1px solid var(--border-glass); 
+            width: 140px; height: 100px; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .platform-box:hover { transform: translateY(-12px); border-color: rgba(255,255,255,0.3); }
+        .platform-box.meta:hover { box-shadow: 0 10px 30px rgba(24, 119, 242, 0.3); border-color: #1877F2; }
+        .platform-box.google:hover { box-shadow: 0 10px 30px rgba(66, 133, 244, 0.3); border-color: #4285F4; }
+        .platform-box.tiktok:hover { box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3); border-color: #ff0050; }
+        .platform-box div { font-weight: 800; font-size: 1.1rem; text-align: center; }
+        .platform-box.meta div { color: #1877F2; }
+        .platform-box.google div { color: #4285F4; }
+        .platform-box.tiktok div { color: #fe2c55; }
+
+        /* PANE 2: Execution Tasks */
+        .execution-list { width: 100%; max-width: 650px; }
+        .exec-item { background: rgba(255,255,255,0.02); padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 0.8rem; display: flex; align-items: center; border: 1px solid var(--border-glass); }
+        .task-info { width: 180px; }
+        .task-info span { display: block; font-size: 0.75rem; font-weight: 700; }
+        .task-info small { color: var(--text-muted); font-size: 0.6rem; text-transform: uppercase; }
+        .progress-track { flex: 1; height: 4px; background: #1e293b; margin: 0 1.5rem; border-radius: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary-blue); width: 0%; transition: width 2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .status-tag { font-size: 0.6rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; width: 85px; text-align: center; }
+        .status-tag.processing { color: var(--primary-blue); border: 1px solid rgba(0, 174, 239, 0.3); background: rgba(0, 174, 239, 0.05); }
+        .status-tag.success { color: #27c93f; border: 1px solid rgba(39, 201, 63, 0.3); background: rgba(39, 201, 63, 0.05); }
+        .pane.active .p-80 { width: 82%; }
+        .pane.active .p-100 { width: 100%; transition-delay: 0.5s; }
+        .pane.active .p-40 { width: 44%; transition-delay: 0.2s; }
+
+        /* --- Solutions & Modules --- */
+        .solutions-section { padding: 8rem 0 6rem; border-top: 1px solid var(--border-glass); }
+        .solutions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 4rem; }
+        .mod-card { background: var(--card-surface); border: 1px solid var(--border-glass); padding: 2.5rem 1.8rem; border-radius: 24px; transition: var(--transition); display: flex; flex-direction: column; position: relative; }
+        .mod-card:hover { transform: translateY(-12px); border-color: var(--primary-blue); box-shadow: 0 20px 40px rgba(0, 174, 239, 0.15); background: #121821; }
+        .mod-card.featured::after { content: "CORE"; position: absolute; top: 15px; right: 20px; font-size: 0.6rem; font-weight: 900; color: var(--primary-blue); border: 1px solid var(--primary-blue); padding: 2px 8px; border-radius: 4px; }
+        .mod-card h4 { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem; }
+        .mod-card p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; min-height: 3em; }
+        .feature-list { list-style: none; margin-top: auto; }
+        .feature-list li { font-size: 0.8rem; color: #cbd5e1; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 10px; }
+        .feature-list li::before { content: "✓"; color: var(--primary-blue); font-weight: 900; flex-shrink: 0; }
+
+        /* --- OPTIMIZED SIMPLE FOOTER --- */
+        footer { padding: 4rem 0; background: #020406; border-top: 1px solid var(--border-glass); }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+        .footer-logo-side { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-logo-text { font-weight: 800; font-size: 1.2rem; color: var(--primary-blue); text-decoration: none; }
+        .footer-copyright { font-size: 0.75rem; color: #444; }
+        .footer-links-side { display: flex; gap: 2rem; align-items: center; }
+        .footer-link-simple { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; transition: color 0.3s; }
+        .footer-link-simple:hover { color: white; }
+
+        @media (max-width: 1100px) { .solutions-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { 
+            .logic-grid, .solutions-grid { grid-template-columns: 1fr; } 
+            .instruction-grid { grid-template-columns: 1fr; }
+            .footer-inner { flex-direction: column; gap: 2rem; text-align: center; }
+            .nav-links { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">BUBBLEYE AI</a>
+            <div class="nav-links">
+                <a href="#solutions" class="nav-link">Solutions & Modules</a>
+                <a href="#" class="btn-demo">Book a Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero container">
+        <h1>Scale Your Ad Creative with<br><span>AI-Powered Automation</span></h1>
+        <p>The enterprise infrastructure for high-velocity ad operations. Convert complex strategies into API execution in seconds.</p>
+    </header>
+
+    <section class="container">
+        <div class="logic-grid" id="logicGrid">
+            <div class="logic-card active" data-index="0">
+                <h3>01. Instruction</h3>
+                <p>Natural language to machine logic</p>
+            </div>
+            <div class="divider">→</div>
+            <div class="logic-card" data-index="1">
+                <h3>02. Orchestration</h3>
+                <p>Cross-channel asset management</p>
+            </div>
+            <div class="divider">→</div>
+            <div class="logic-card" data-index="2">
+                <h3>03. Execution</h3>
+                <p>High-velocity API deployment</p>
+            </div>
+        </div>
+
+        <div class="showcase-window">
+            <div class="pane active" id="pane-0">
+                <div class="instruction-grid">
+                    <div class="chatgpt-box">
+                        <p id="typewriter" style="font-size: 1.1rem; line-height: 1.6; min-height: 1.2em;"></p>
+                        <div class="ai-status" id="aiStatus"><span class="status-dot"></span>AI DECODING...</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div class="data-flow-container"><div class="data-beam" id="dataBeam"></div></div>
+                        <p style="font-size: 0.55rem; font-weight: 800; color: var(--primary-blue); margin-top: 10px;">TRANSLATING</p>
+                    </div>
+                    <div class="code-box">
+                        <div id="codeResponse" style="opacity:0;">
+                            POST /v1/meta/campaign_batch<br>
+                            { "action": "CREATE_VARATIONS", "files": 5 }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pane" id="pane-1">
+                <h2 style="margin-bottom:2.5rem;">Unified Asset Sync</h2>
+                <div class="platform-group">
+                    <div class="platform-box meta"><div>Meta</div></div>
+                    <div class="platform-box google"><div>Google</div></div>
+                    <div class="platform-box tiktok"><div>TikTok</div></div>
+                </div>
+                <p style="margin-top:2.5rem; color:var(--text-muted);">Centrally manage assets for all major ad platforms.</p>
+            </div>
+
+            <div class="pane" id="pane-2">
+                <div class="execution-list">
+                    <div class="exec-item">
+                        <div class="task-info"><span>Meta_Uploader_Batch_#402</span><small>5 Variations • US Market</small></div>
+                        <div class="progress-track"><div class="progress-fill p-80"></div></div>
+                        <div class="status-tag processing">PROCESSING</div>
+                    </div>
+                    <div class="exec-item">
+                        <div class="task-info"><span>Google_PMax_Asset_Sync</span><small>Video & Headlines</small></div>
+                        <div class="progress-track"><div class="progress-fill p-100"></div></div>
+                        <div class="status-tag success">SUCCESS</div>
+                    </div>
+                    <div class="exec-item">
+                        <div class="task-info"><span>TikTok_HighFreq_Rotate</span><small>Dynamic Video Swap</small></div>
+                        <div class="progress-track"><div class="progress-fill p-40"></div></div>
+                        <div class="status-tag processing">PROCESSING</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section (CTA Button Restored) -->
+    <section class="container solutions-section" id="solutions">
+        <div style="text-align:center; margin-bottom:4rem;">
+            <h2 style="font-size:2.2rem; font-weight:800;">Solutions & Modules</h2>
+            <p style="color:var(--text-muted); margin-top:10px;">The complete toolkit for creative automation.</p>
+        </div>
+        <div class="solutions-grid">
+            <div class="mod-card featured">
+                <h4>Creative Hub</h4>
+                <p>The centralized AI orchestration layer for all your creative ops.</p>
+                <ul class="feature-list">
+                    <li>AI Strategy Translation Engine</li>
+                    <li>Unified Asset Library</li>
+                    <li>Global Command Center</li>
+                </ul>
+            </div>
+            <div class="mod-card">
+                <h4>Meta Uploader</h4>
+                <p>Automated bulk deployment for Facebook and Instagram.</p>
+                <ul class="feature-list">
+                    <li>Batch Variation Uploads</li>
+                    <li>Workflow Template Engine</li>
+                    <li>Automated Tagging System</li>
+                </ul>
+            </div>
+            <div class="mod-card">
+                <h4>Google Uploader</h4>
+                <p>High-speed asset syncing for YouTube and PMax campaigns.</p>
+                <ul class="feature-list">
+                    <li>PMax Asset Group Automation</li>
+                    <li>YouTube Video API Uploads</li>
+                    <li>Cross-Campaign Asset Sync</li>
+                </ul>
+            </div>
+            <div class="mod-card">
+                <h4>TikTok Uploader</h4>
+                <p>Combat creative fatigue with high-velocity video rotation.</p>
+                <ul class="feature-list">
+                    <li>Smart Creative Rotation</li>
+                    <li>Rapid Batch Deployment</li>
+                    <li>Trend-Driven API Sync</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CTA BUTTON RESTORED HERE -->
+        <div style="text-align:center; margin-top:5rem;">
+            <a href="#" class="btn-demo" style="padding:1.2rem 3.5rem; font-size:1rem; border-radius:50px;">Book a Strategy Demo</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-logo-side">
+                <a href="#" class="footer-logo-text">BUBBLEYE AI</a>
+                <span class="footer-copyright">© 2024 Bubbleye Ltd. All rights reserved.</span>
+            </div>
+            <div class="footer-links-side">
+                <a href="#" class="footer-link-simple">Privacy Policy</a>
+                <a href="#" class="footer-link-simple">Terms of Service</a>
+                <a href="mailto:sales@bubbleye.com" class="footer-link-simple">Contact Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const cards = document.querySelectorAll('.logic-card');
+        const panes = document.querySelectorAll('.pane');
+        const typewriterText = "Upload my latest 5 videos to Meta and create a new A/B test campaign.";
+        let typingActive = false;
+
+        async function runInstructionAnimation() {
+            if(typingActive) return;
+            typingActive = true;
+            const target = document.getElementById('typewriter');
+            const codeRes = document.getElementById('codeResponse');
+            const aiStatus = document.getElementById('aiStatus');
+            const beam = document.getElementById('dataBeam');
+            target.textContent = ""; codeRes.style.opacity = "0"; aiStatus.style.opacity = "0"; beam.classList.remove('active');
+
+            for(let i=0; i < typewriterText.length; i++) {
+                target.textContent += typewriterText.charAt(i);
+                await new Promise(r => setTimeout(r, 30));
+            }
+            aiStatus.style.opacity = "1"; await new Promise(r => setTimeout(r, 600));
+            beam.classList.add('active'); await new Promise(r => setTimeout(r, 1200));
+            beam.classList.remove('active'); aiStatus.style.opacity = "0";
+            codeRes.style.opacity = "1"; typingActive = false;
+        }
+
+        function switchTab(index) {
+            cards.forEach(c => c.classList.remove('active'));
+            panes.forEach(p => p.classList.remove('active'));
+            cards[index].classList.add('active');
+            panes[index].classList.add('active');
+            if(index == 0) runInstructionAnimation();
+        }
+
+        cards.forEach((card, idx) => {
+            card.addEventListener('mouseenter', () => switchTab(idx));
+            card.addEventListener('click', () => switchTab(idx));
+        });
+
+        window.onload = runInstructionAnimation;
+    </script>
+</body>
+</html>
