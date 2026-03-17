@@ -44,7 +44,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #0F172A; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Layout Constraints - Maximum Breathing Room */
+        /* Layout Constraints */
         .content-container { max-width: 1100px; margin-left: auto; margin-right: auto; padding-left: 2.5rem; padding-right: 2.5rem; }
         
         .soft-shadow { box-shadow: 0 40px 80px rgba(0, 0, 0, 0.04); }
@@ -69,7 +69,6 @@
             animation: text-shimmer 4s linear infinite;
         }
 
-        /* Terminal Cursor */
         .cursor {
             display: inline-block;
             width: 8px;
@@ -86,7 +85,6 @@
             opacity: 0; 
             transform: translateY(40px); 
             transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity;
         }
         .reveal.active { 
             opacity: 1; 
@@ -116,19 +114,28 @@
 </head>
 <body class="antialiased overflow-x-hidden">
 
-    <!-- Navigation -->
+    <!-- 1. Navigation Bar -->
     <nav class="fixed top-0 w-full z-[100] glass-nav border-b border-black/5">
         <div class="max-w-6xl mx-auto px-10 h-24 flex items-center justify-between">
+            <!-- Logo -->
             <span class="text-xl md:text-2xl font-extrabold tracking-tighter text-deep uppercase">
                 Bubbleye <span class="text-primary">Poseidon</span>
             </span>
+
+            <!-- Center Navigation Links (Muted Gray Style) -->
+            <div class="hidden md:flex items-center space-x-12">
+                <a href="#ecosystem" class="text-slate font-semibold text-sm tracking-wide hover:text-primary transition-colors duration-300">Ecosystem</a>
+                <a href="#command" class="text-slate font-semibold text-sm tracking-wide hover:text-primary transition-colors duration-300">Command Modes</a>
+            </div>
+
+            <!-- Action Button -->
             <button class="btn-pulse bg-primary text-white px-10 py-3.5 rounded-2xl font-bold text-sm hover:scale-105 transition-all shadow-xl shadow-primary/20">
                 Contact Us
             </button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- 2. Hero Section -->
     <header class="relative pt-64 pb-32 px-8 text-center">
         <div class="content-container">
             <div class="reveal inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs md:text-sm font-bold mb-12 tracking-widest uppercase">
@@ -147,17 +154,17 @@
         </div>
     </header>
 
-    <!-- Universal Native Integration (Fixed 2x4 Centered Grid) -->
-    <section class="py-32 bg-ghost border-y border-black/5 px-8">
+    <!-- 3. Universal Native Integration (Ecosystem Section) -->
+    <section id="ecosystem" class="py-32 bg-ghost border-y border-black/5 px-8">
         <div class="content-container text-center">
             <p class="reveal text-xs font-bold uppercase tracking-[0.6em] text-deep mb-20 opacity-40">Universal Native Integration</p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 justify-center" id="module-grid">
-                <!-- JS Injected 2x4 Grid -->
+                <!-- JS Injected Fixed 2x4 Grid -->
             </div>
         </div>
     </section>
 
-    <!-- Core Capabilities (Centered Content) -->
+    <!-- 4. Orchestration Intelligence (Centered Features) -->
     <section class="py-48 bg-white px-8">
         <div class="content-container text-center">
             <div class="reveal mb-28">
@@ -166,21 +173,21 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div class="reveal p-12 rounded-[3rem] bg-ghost premium-border hover-card flex flex-col items-center">
+                <div class="reveal p-12 rounded-[3.5rem] bg-ghost premium-border hover-card flex flex-col items-center">
                     <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10">
                         <i data-lucide="layers" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold text-2xl text-deep mb-6">Native API Preservation</h4>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Official protocols for 100% feature compatibility across all supported channels.</p>
                 </div>
-                <div class="reveal p-12 rounded-[3rem] bg-ghost premium-border hover-card flex flex-col items-center" style="transition-delay: 100ms;">
+                <div class="reveal p-12 rounded-[3.5rem] bg-ghost premium-border hover-card flex flex-col items-center" style="transition-delay: 100ms;">
                     <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10">
                         <i data-lucide="refresh-ccw" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold text-2xl text-deep mb-6">Cross-Platform Sync</h4>
                     <p class="text-slate/60 text-sm leading-relaxed font-medium">Real-time asset mirroring across your tech stack with autonomous synchronization.</p>
                 </div>
-                <div class="reveal p-12 rounded-[3rem] bg-ghost premium-border hover-card flex flex-col items-center" style="transition-delay: 200ms;">
+                <div class="reveal p-12 rounded-[3.5rem] bg-ghost premium-border hover-card flex flex-col items-center" style="transition-delay: 200ms;">
                     <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-10">
                         <i data-lucide="brain-circuit" class="w-8 h-8"></i>
                     </div>
@@ -191,7 +198,7 @@
         </div>
     </section>
 
-    <!-- White Tech Terminal Simulation -->
+    <!-- 5. Tech Terminal (Perpetual Animation) -->
     <section class="pb-48 bg-white px-8">
         <div class="content-container">
             <div class="reveal animate-float max-w-4xl mx-auto">
@@ -206,15 +213,15 @@
                         <div class="mono text-[10px] text-primary font-bold tracking-[0.25em] uppercase">poseidon-agent-core-v1</div>
                     </div>
                     <div class="p-10 md:p-14 h-[440px] tech-grid mono text-xs md:text-sm flex flex-col justify-start overflow-y-auto" id="terminal-engine">
-                        <!-- Content Injected via JS -->
+                        <!-- Terminal content injected here -->
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Command Modes -->
-    <section class="py-48 bg-ghost px-8 border-t border-black/5">
+    <!-- 6. Command Modes (Command and Control Section) -->
+    <section id="command" class="py-48 bg-ghost px-8 border-t border-black/5">
         <div class="content-container text-center">
             <div class="reveal mb-24">
                 <h2 class="text-4xl md:text-6xl font-extrabold text-deep tracking-tighter mb-8 leading-tight">Command and Control</h2>
@@ -247,7 +254,7 @@
         </div>
     </section>
 
-    <!-- Final CTA -->
+    <!-- 7. Final CTA -->
     <section class="py-48 bg-white px-8">
         <div class="reveal max-w-5xl mx-auto bg-deep rounded-[4rem] p-24 md:p-40 text-center relative overflow-hidden">
             <div class="absolute inset-0 opacity-5 pointer-events-none tech-grid"></div>
@@ -261,7 +268,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- 8. Footer -->
     <footer class="bg-white border-t border-black/5 py-32 px-10">
         <div class="max-w-6xl mx-auto grid md:grid-cols-4 gap-24">
             <div class="col-span-2 text-center md:text-left">
@@ -280,7 +287,7 @@
             <div class="text-center md:text-left">
                 <h4 class="font-bold text-deep mb-10 uppercase text-xs tracking-[0.3em] opacity-40">Connect</h4>
                 <ul class="text-slate/60 text-sm space-y-6 font-semibold">
-                    <li><a href="#" class="hover:text-primary transition-colors">Contact Sales</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Sales</a></li>
                     <li><a href="#" class="hover:text-primary transition-colors">LinkedIn</a></li>
                 </ul>
             </div>
@@ -295,7 +302,7 @@
     <script>
         lucide.createIcons();
 
-        // 1. Module Grid Generator (2x4 Rows)
+        // 1. Module Generator (Fixed 2x4 Centered Rows)
         const modules = [
             { name: "Applovin", icon: "zap" },
             { name: "Google Ads", icon: "search" },
@@ -311,8 +318,7 @@
         modules.forEach((mod, idx) => {
             const div = document.createElement('div');
             div.className = "reveal bg-white p-12 rounded-3xl flex flex-col items-center justify-center premium-border hover-card group cursor-default text-center";
-            // Staggered reveal based on grid index
-            div.style.transitionDelay = `${(idx % 4) * 100}ms`;
+            div.style.transitionDelay = `${(idx % 4) * 80}ms`;
             div.innerHTML = `
                 <div class="text-slate/30 group-hover:text-primary transition-colors mb-6 flex justify-center"><i data-lucide="${mod.icon}" class="w-8 h-8"></i></div>
                 <span class="text-[12px] font-black uppercase tracking-widest text-deep opacity-80">${mod.name}</span>
@@ -321,23 +327,16 @@
         });
         lucide.createIcons();
 
-        // 2. Perpetual Scroll Reveal Engine (Re-triggers on every entry)
-        const observerOptions = {
-            threshold: 0.15,
-            rootMargin: "0px"
-        };
-
+        // 2. Perpetual Scroll Reveal Engine
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                 } else {
-                    // Reset class when element leaves viewport for re-triggering
                     entry.target.classList.remove('active');
                 }
             });
-        }, observerOptions);
-
+        }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         // 3. AI Terminal Engine (ISO 24H English)
@@ -385,7 +384,6 @@
             for(let log of task.logs) {
                 const logLine = document.createElement('div');
                 const ok = log.includes("SUCCESS");
-                // Pure ISO 24H Format
                 const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
                 
                 logLine.className = `text-[12px] mb-3.5 opacity-0 transition-opacity duration-200 ${ok ? 'text-primary font-black pt-8' : 'text-slate/50'}`;
