@@ -30,7 +30,6 @@
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
-        /* --- Navbar (優化間距) --- */
         nav { 
             position: fixed; top: 0; width: 100%; padding: 1.2rem 0; 
             background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(20px);
@@ -51,13 +50,11 @@
         }
         .btn-demo:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 174, 239, 0.4); }
 
-        /* --- Hero --- */
         header.hero { padding: 10rem 0 4rem; text-align: center; }
         h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.5rem; }
         h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         header p { font-size: 1.2rem; color: var(--text-muted); max-width: 750px; margin: 0 auto; }
 
-        /* --- Showcase Window & Logic --- */
         .logic-grid { display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; align-items: center; gap: 1rem; margin: 4rem 0; }
         .logic-card { background: var(--card-surface); padding: 2.2rem 1.5rem; border-radius: 24px; border: 1px solid var(--border-glass); text-align: center; cursor: pointer; transition: var(--transition); }
         .logic-card.active { border-color: var(--primary-blue); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
@@ -67,9 +64,9 @@
 
         .showcase-window { background: #010409; border: 1px solid var(--border-glass); border-radius: 32px; min-height: 560px; position: relative; margin-bottom: 8rem; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
         .pane { position: absolute; inset: 0; padding: 3rem; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .pane.active { opacity: 1; visibility: visible; }
+        /* 關鍵修正處：確保 active 時一定看的到 */
+        .pane.active { opacity: 1 !important; visibility: visible !important; }
 
-        /* PANE 0: ChatGPT Animation */
         .instruction-grid { display: grid; grid-template-columns: 1.2fr 80px 1.2fr; align-items: center; gap: 1rem; width: 100%; max-width: 1000px; }
         .chatgpt-box { background: #161b22; border: 1px solid var(--border-glass); border-radius: 20px; padding: 2.5rem; min-height: 250px; position: relative; display: flex; flex-direction: column; justify-content: center; }
         .chatgpt-box::before { content: "STRATEGY INPUT"; position: absolute; top: 15px; left: 20px; font-size: 0.6rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; }
@@ -83,7 +80,6 @@
         .code-box { background: #0d1117; border: 1px solid var(--border-glass); border-radius: 20px; padding: 2.5rem; min-height: 250px; font-family: 'Fira Code', monospace; color: #7ee787; font-size: 0.85rem; position: relative; display: flex; flex-direction: column; justify-content: center; }
         .code-box::before { content: "MACHINE EXECUTION"; position: absolute; top: 15px; left: 20px; font-size: 0.6rem; font-weight: 800; color: #8B949E; }
 
-        /* PANE 1: Platform Sync (Centered) */
         .platform-group { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
         .platform-box { 
             padding: 1.8rem; background: #161b22; border-radius: 20px; border: 1px solid var(--border-glass); 
@@ -99,7 +95,6 @@
         .platform-box.google div { color: #4285F4; }
         .platform-box.tiktok div { color: #fe2c55; }
 
-        /* PANE 2: Execution Tasks */
         .execution-list { width: 100%; max-width: 650px; }
         .exec-item { background: rgba(255,255,255,0.02); padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 0.8rem; display: flex; align-items: center; border: 1px solid var(--border-glass); }
         .task-info { width: 180px; }
@@ -114,7 +109,6 @@
         .pane.active .p-100 { width: 100%; transition-delay: 0.5s; }
         .pane.active .p-40 { width: 44%; transition-delay: 0.2s; }
 
-        /* --- Solutions & Modules --- */
         .solutions-section { padding: 8rem 0 6rem; border-top: 1px solid var(--border-glass); }
         .solutions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-top: 4rem; }
         .mod-card { background: var(--card-surface); border: 1px solid var(--border-glass); padding: 2.5rem 1.8rem; border-radius: 24px; transition: var(--transition); display: flex; flex-direction: column; position: relative; }
@@ -126,7 +120,6 @@
         .feature-list li { font-size: 0.8rem; color: #cbd5e1; margin-bottom: 0.8rem; display: flex; align-items: flex-start; gap: 10px; }
         .feature-list li::before { content: "✓"; color: var(--primary-blue); font-weight: 900; flex-shrink: 0; }
 
-        /* --- OPTIMIZED SIMPLE FOOTER --- */
         footer { padding: 4rem 0; background: #020406; border-top: 1px solid var(--border-glass); }
         .footer-inner { display: flex; justify-content: space-between; align-items: center; }
         .footer-logo-side { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -232,7 +225,6 @@
         </div>
     </section>
 
-    <!-- Solutions Section (CTA Button Restored) -->
     <section class="container solutions-section" id="solutions">
         <div style="text-align:center; margin-bottom:4rem;">
             <h2 style="font-size:2.2rem; font-weight:800;">Solutions & Modules</h2>
@@ -277,7 +269,6 @@
             </div>
         </div>
 
-        <!-- CTA BUTTON RESTORED HERE -->
         <div style="text-align:center; margin-top:5rem;">
             <a href="#" class="btn-demo" style="padding:1.2rem 3.5rem; font-size:1rem; border-radius:50px;">Book a Strategy Demo</a>
         </div>
